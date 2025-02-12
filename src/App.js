@@ -1,25 +1,55 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import UserTable from './components/UserTable';
 import './App.css';
 
-function App() {
+const App = () => {
+  const [users, setUsers] = useState([
+    { name: 'Juan Pérez', email: 'juan.perez@example.com' },
+    { name: 'María López', email: 'maria.lopez@example.com' },
+  ]);
+
+  const [newUser, setNewUser] = useState({ name: '', email: '' });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewUser({ ...newUser, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setUsers([...users, newUser]);
+    setNewUser({ name: '', email: '' });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Registro de Usuarios</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Nombre:</label>
+          <input
+            type="text"
+            name="name"
+            value={newUser.name}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Correo Electrónico:</label>
+          <input
+            type="email"
+            name="email"
+            value={newUser.email}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <button type="submit">Registrar</button>
+      </form>
+      <UserTable users={users} />
     </div>
   );
-}
+};
 
 export default App;
