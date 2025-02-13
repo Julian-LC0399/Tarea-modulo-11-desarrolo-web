@@ -1,7 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client'; // Importa createRoot desde react-dom/client
 import './index.css';
 import App from './App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// Selecciona el contenedor root
+const container = document.getElementById('root');
 
+// Crea una raíz para el contenedor
+const root = createRoot(container);
+
+// Renderiza la aplicación dentro de la raíz
+root.render(<App />);
