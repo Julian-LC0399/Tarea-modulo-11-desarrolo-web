@@ -3,10 +3,7 @@ import UserTable from './components/UserTable';
 import './App.css';
 
 const App = () => {
-  const [users, setUsers] = useState([
-    { name: 'Juan Pérez', email: 'juan.perez@example.com' },
-    { name: 'María López', email: 'maria.lopez@example.com' },
-  ]);
+  const [users, setUsers] = useState([]); // Lista de usuarios vacía al inicio
 
   const [newUser, setNewUser] = useState({ name: '', email: '' });
   const [isFormVisible, setIsFormVisible] = useState(false);
