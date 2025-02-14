@@ -10,6 +10,9 @@ const App = () => {
 
   const [newUser, setNewUser] = useState({ name: '', email: '' });
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentUserIndex, setCurrentUserIndex] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -18,19 +21,52 @@ const App = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setUsers([...users, newUser]);
-    setNewUser({ name: '', email: '' });
+    if (newUser.name && newUser.email) {
+      if (isEditing) {
+        const updatedUsers = users.map((user, index) =>
+          index === currentUserIndex ? newUser : user
+        );
+        setUsers(updatedUsers);
+        setIsEditing(false);
+        setCurrentUserIndex(null);
+        setAlertMessage('Usuario actualizado exitosamente.');
+      } else {
+        setUsers([...users, newUser]);
+        setAlertMessage('Usuario registrado exitosamente.');
+      }
+      setNewUser({ name: '', email: '' });
+    } else {
+      setAlertMessage('Por favor, complete todos los campos.');
+    }
+  };
+
+  const handleEdit = (index) => {
+    setNewUser(users[index]);
+    setIsEditing(true);
+    setCurrentUserIndex(index);
+    setIsFormVisible(true);
+  };
+
+  const handleDelete = (index) => {
+    const updatedUsers = users.filter((_, i) => i !== index);
+    setUsers(updatedUsers);
+    setAlertMessage('Usuario borrado exitosamente.');
   };
 
   const toggleFormVisibility = () => {
     setIsFormVisible(!isFormVisible);
+    if (!isFormVisible) {
+      setNewUser({ name: '', email: '' });
+      setIsEditing(false);
+      setCurrentUserIndex(null);
+    }
   };
 
   return (
     <div>
       <h1>Registro de Usuarios</h1>
       <button onClick={toggleFormVisibility}>
-        {isFormVisible ? 'Ocultar Formulario' : 'Mostrar Formulario'}
+        {isFormVisible ? 'Ocultar formulario' : 'Mostrar formulario'}
       </button>
       {isFormVisible && (
         <form onSubmit={handleSubmit}>
@@ -54,10 +90,11 @@ const App = () => {
               required
             />
           </div>
-          <button type="submit">Registrar</button>
+          <button type="submit">{isEditing ? 'Actualizar' : 'Registrar'}</button>
         </form>
       )}
-      <UserTable users={users} />
+      {alertMessage && <div className="alert">{alertMessage}</div>}
+      <UserTable users={users} onEdit={handleEdit} onDelete={handleDelete} />
     </div>
   );
 };
