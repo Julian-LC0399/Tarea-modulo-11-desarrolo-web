@@ -9,6 +9,7 @@ const App = () => {
   ]);
 
   const [newUser, setNewUser] = useState({ name: '', email: '' });
+  const [isFormVisible, setIsFormVisible] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -21,32 +22,41 @@ const App = () => {
     setNewUser({ name: '', email: '' });
   };
 
+  const toggleFormVisibility = () => {
+    setIsFormVisible(!isFormVisible);
+  };
+
   return (
     <div>
       <h1>Registro de Usuarios</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Nombre:</label>
-          <input
-            type="text"
-            name="name"
-            value={newUser.name}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Correo Electrónico:</label>
-          <input
-            type="email"
-            name="email"
-            value={newUser.email}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <button type="submit">Registrar</button>
-      </form>
+      <button onClick={toggleFormVisibility}>
+        {isFormVisible ? 'Ocultar Formulario' : 'Mostrar Formulario'}
+      </button>
+      {isFormVisible && (
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Nombre:</label>
+            <input
+              type="text"
+              name="name"
+              value={newUser.name}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div>
+            <label>Correo Electrónico:</label>
+            <input
+              type="email"
+              name="email"
+              value={newUser.email}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <button type="submit">Registrar</button>
+        </form>
+      )}
       <UserTable users={users} />
     </div>
   );
