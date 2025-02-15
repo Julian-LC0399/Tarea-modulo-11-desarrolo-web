@@ -79,7 +79,7 @@ const App = () => {
 
   return (
     <div>
-      <h1>Registro de Usuarios</h1>
+      <h1>Registro de usuarios</h1>
       <button onClick={toggleFormVisibility}>
         {isFormVisible ? 'Ocultar formulario' : 'Mostrar formulario'}
       </button>
