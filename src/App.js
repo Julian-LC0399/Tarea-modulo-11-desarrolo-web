@@ -13,6 +13,16 @@ const App = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    if (name === 'name' && value.length > 50) {
+      setAlertMessage('El nombre no puede tener más de 50 caracteres.');
+      clearAlertMessage();
+      return;
+    }
+    if (name === 'email' && value.length > 100) {
+      setAlertMessage('El correo electrónico no puede tener más de 100 caracteres.');
+      clearAlertMessage();
+      return;
+    }
     setNewUser({ ...newUser, [name]: value });
   };
 
@@ -82,16 +92,18 @@ const App = () => {
               name="name"
               value={newUser.name}
               onChange={handleInputChange}
+              maxLength="50"
               required
             />
           </div>
           <div>
-            <label>Correo Electrónico:</label>
+            <label>Correo electrónico:</label>
             <input
               type="email"
               name="email"
               value={newUser.email}
               onChange={handleInputChange}
+              maxLength="100"
               required
             />
           </div>

@@ -7,7 +7,7 @@ const UserTable = ({ users, onEdit, onDelete }) => {
       <thead>
         <tr>
           <th style={{ border: '1px solid black' }}>Nombre</th>
-          <th style={{ border: '1px solid black' }}>Correo Electrónico</th>
+          <th style={{ border: '1px solid black' }}>Correo electrónico</th>
           <th style={{ border: '1px solid black' }}>Acciones</th>
         </tr>
       </thead>
