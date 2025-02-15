@@ -35,6 +35,7 @@ const App = () => {
     } else {
       setAlertMessage('Por favor, complete todos los campos.');
     }
+    clearAlertMessage();
   };
 
   const handleEdit = (index) => {
@@ -48,6 +49,7 @@ const App = () => {
     const updatedUsers = users.filter((_, i) => i !== index);
     setUsers(updatedUsers);
     setAlertMessage('Usuario borrado exitosamente.');
+    clearAlertMessage();
   };
 
   const toggleFormVisibility = () => {
@@ -57,6 +59,12 @@ const App = () => {
       setIsEditing(false);
       setCurrentUserIndex(null);
     }
+  };
+
+  const clearAlertMessage = () => {
+    setTimeout(() => {
+      setAlertMessage('');
+    }, 3000); // La alerta desaparecerá después de 3 segundos
   };
 
   return (
